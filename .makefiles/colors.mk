@@ -38,8 +38,7 @@ dash_line   = ------------------------------------------------------------------
 dots_line   = ........................................................................
 ascii_block = ██████████
 
-.PHONY: show_colors
-show_colors:
+.show_colors:
 	@echo "Black:       $(Black)$(ascii_block)$(NC)\n"
 	@echo "Red:         $(Red)$(ascii_block)$(NC)\n"
 	@echo "Green:       $(Green)$(ascii_block)$(NC)\n"
