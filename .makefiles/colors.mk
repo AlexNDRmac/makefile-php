@@ -24,6 +24,26 @@ On_Purple  =\033[45m
 On_Cyan    =\033[46m
 On_White   =\033[47m
 
+OK_COLOR    = \033[32;01m
+ERROR_COLOR = \033[31;01m
+WARN_COLOR  = \033[33;01m
+
 solid_line = ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 dash_line  = ------------------------------------------------------------------------
 dots_line  = ........................................................................
+ascii_block = ██████████
+
+.PHONY: show_colors
+show_colors:
+	@echo "OK_COLOR:    $(OK_COLOR)$(ascii_block)$(NC)\n"
+	@echo "WARN_COLOR:  $(WARN_COLOR)$(ascii_block)$(NC)\n"
+	@echo "ERROR_COLOR: $(ERROR_COLOR)$(ascii_block)$(NC)\n"
+	@echo "Black:       $(Black)$(ascii_block)$(NC)\n"
+	@echo "Red:         $(Red)$(ascii_block)$(NC)\n"
+	@echo "Green:       $(Green)$(ascii_block)$(NC)\n"
+	@echo "Yellow:      $(Yellow)$(ascii_block)$(NC)\n"
+	@echo "Blue:        $(Blue)$(ascii_block)$(NC)\n"
+	@echo "Purple:      $(Purple)$(ascii_block)$(NC)\n"
+	@echo "Cyan:        $(Cyan)$(ascii_block)$(NC)\n"
+	@echo "White:       $(White)$(ascii_block)$(NC)\n"
+	@echo "Gray:        $(Gray)$(ascii_block)$(NC)\n"
