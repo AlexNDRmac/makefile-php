@@ -4,9 +4,10 @@ THIS_MAKEFILE := $(word $(words $(MAKEFILE_LIST)), $(MAKEFILE_LIST))
 # =================================================================
 include ./.makefiles/includes.mk
 include ./.makefiles/colors.mk
+include ./.makefiles/functions.mk
 # =================================================================
 
-.PHONY: help checks
+.PHONY: install check-tools help
 
 # Run make help by default
 .DEFAULT_GOAL = help
@@ -27,6 +28,15 @@ PHPMD     := $(BIN)/phpmd
 METRICS   := $(BIN)/phpmetrics
 INFECTION := $(BIN)/infection
 
+install: ## Install all PHP Tools (skip existing tools in ./vendor/bin)
+	$(call install_phar,$(INFECTION),https://github.com/infection/infection/releases/download/0.13.1/infection.phar)
+	$(call install_phar,$(PHPUNIT),https://phar.phpunit.de/phpunit-8.phar)
+
+check-tools: ## Check all Tools
+	php --version
+	$(INFECTION) --version
+
+---: ## ------------------------------------------------------------------------
 help: ## Show this help and exit
 	@echo "$(Yellow)Usage:$(NC)\n  make [target] [arguments]"
 	@echo ''
@@ -38,5 +48,3 @@ help: ## Show this help and exit
 %:
 	@:
 
-check-tools: ## Check all Tools
-	php --version
