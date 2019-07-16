@@ -29,12 +29,19 @@ METRICS   := $(BIN)/phpmetrics
 INFECTION := $(BIN)/infection
 
 install: ## Install all PHP Tools (skip existing tools in ./vendor/bin)
-	$(call install_phar,$(INFECTION),https://github.com/infection/infection/releases/download/0.13.1/infection.phar)
 	$(call install_phar,$(PHPUNIT),https://phar.phpunit.de/phpunit-8.phar)
+	$(call install_phar,$(PHPCS),https://squizlabs.github.io/PHP_CodeSniffer/phpcs.phar)
+	$(call install_phar,$(PHPMD),http://static.phpmd.org/php/latest/phpmd.phar)
+	$(call install_phar,$(METRICS),https://github.com/phpmetrics/PhpMetrics/blob/master/build/phpmetrics.phar)
+	$(call install_phar,$(INFECTION),https://github.com/infection/infection/releases/download/0.13.1/infection.phar)
 
 check-tools: ## Check all Tools
-	php --version
-	$(INFECTION) --version
+	php --version && echo
+	$(call check_tools,$(PHPUNIT))
+	$(call check_tools,$(PHPCS))
+	$(call check_tools,$(PHPMD))
+	$(call check_tools,$(METRICS))
+	$(call check_tools,$(INFECTION))
 
 ---: ## ------------------------------------------------------------------------
 help: ## Show this help and exit
