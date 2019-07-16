@@ -30,9 +30,9 @@ INFECTION := $(BIN)/infection
 
 install: ## Install all PHP Tools (skip existing tools in ./vendor/bin)
 	$(call install_phar,$(PHPUNIT),https://phar.phpunit.de/phpunit-8.phar)
-	$(call install_phar,$(PHPCS),https://squizlabs.github.io/PHP_CodeSniffer/phpcs.phar)
-	$(call install_phar,$(PHPMD),http://static.phpmd.org/php/latest/phpmd.phar)
-	$(call install_phar,$(METRICS),https://github.com/phpmetrics/PhpMetrics/blob/master/build/phpmetrics.phar)
+	$(call install_phar,$(PHPCS),https://github.com/squizlabs/PHP_CodeSniffer/releases/download/3.4.2/phpcs.phar)
+	$(call install_phar,$(PHPMD),https://github.com/phpmd/phpmd/releases/download/2.6.1/phpmd.phar)
+	$(call install_phar,$(METRICS),https://github.com/phpmetrics/PhpMetrics/releases/download/v2.4.1/phpmetrics.phar)
 	$(call install_phar,$(INFECTION),https://github.com/infection/infection/releases/download/0.13.1/infection.phar)
 
 check-tools: ## Check all Tools
