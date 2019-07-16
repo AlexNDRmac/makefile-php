@@ -20,6 +20,8 @@ include ./.makefiles/functions.mk
 CWD = $(shell cd $(shell dirname $(THIS_MAKEFILE)); pwd)
 # Full path to `vendor/bin` directory
 BIN = $(CWD)/vendor/bin
+# Configuration for Tools, source url's
+SRC = $(CWD)/.makefiles/.sources.conf
 
 # Common PHP Tools path
 PHPUNIT    := $(BIN)/phpunit
@@ -28,12 +30,18 @@ PHPMD      := $(BIN)/phpmd
 PHPMETRICS := $(BIN)/phpmetrics
 INFECTION  := $(BIN)/infection
 
+
+# =================================================================
+# Makefile Targets:
+# =================================================================
+
+---: ## --------------------------------------------------------------
 install: ## Install all PHP Tools (skip existing tools in ./vendor/bin)
-	$(call install_phar,$(PHPUNIT),https://phar.phpunit.de/phpunit-8.phar)
-	$(call install_phar,$(PHPCS),https://github.com/squizlabs/PHP_CodeSniffer/releases/download/3.4.2/phpcs.phar)
-	$(call install_phar,$(PHPMD),https://github.com/phpmd/phpmd/releases/download/2.6.1/phpmd.phar)
-	$(call install_phar,$(PHPMETRICS),https://github.com/phpmetrics/PhpMetrics/releases/download/v2.4.1/phpmetrics.phar)
-	$(call install_phar,$(INFECTION),https://github.com/infection/infection/releases/download/0.13.1/infection.phar)
+	$(call install_phar,$(PHPUNIT),$(call config,PHPUNIT,$(SRC)))
+	$(call install_phar,$(PHPCS),$(call config,PHPCS,$(SRC)))
+	$(call install_phar,$(PHPMD),$(call config,PHPMD,$(SRC)))
+	$(call install_phar,$(PHPMETRICS),$(call config,PHPMETRICS,$(SRC)))
+	$(call install_phar,$(INFECTION),$(call config,INFECTION,$(SRC)))
 
 check-tools: ## Check all Tools
 	$(call check_tools,$(shell which php))
@@ -47,7 +55,7 @@ check-tools: ## Check all Tools
 help: .logo ## Show this help and exit
 	@echo "$(Yellow)Usage:$(NC)\n  make [target] [arguments]"
 	@echo ''
-	@echo "$(Yellow)Available targets:$(NC)"
+	@echo "$(Yellow)Targets:$(NC)"
 	@echo ''
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(THIS_MAKEFILE) | awk 'BEGIN {FS = ":.*?## "}; \
 		{printf "  $(Cyan)%-15s$(NC) %s\n", $$1, $$2}'

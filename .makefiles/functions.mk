@@ -27,3 +27,10 @@ define check_tools
 	fi
 	echo
 endef
+
+# Read param fro config file
+# example:
+#        $(call config,PHPUNIT,./makefiles/.sources.conf)
+define config
+	`grep -E $(1) $(2) | awk '{gsub(/$(1)=/,"")}1'`
+endef
