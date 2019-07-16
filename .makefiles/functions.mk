@@ -14,3 +14,16 @@ define install_phar
 		$(call download_phar,$(1),$(2)); \
 	fi
 endef
+
+# Check if PHP tool exists. On success - display tool version
+# example:
+#        $(call check_tools,./vendor/bin/phpunit)
+define check_tools
+	echo "$(Green)checking > $(1)$(NC)"
+	if test -f "$(1)"; then \
+		$(1) --version; \
+	else \
+		echo "$(Red)not installed$(NC)"; \
+	fi
+	echo
+endef
