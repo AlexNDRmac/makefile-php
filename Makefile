@@ -22,17 +22,17 @@ CWD = $(shell cd $(shell dirname $(THIS_MAKEFILE)); pwd)
 BIN = $(CWD)/vendor/bin
 
 # Common PHP Tools path
-PHPUNIT   := $(BIN)/phpunit
-PHPCS     := $(BIN)/phpcs
-PHPMD     := $(BIN)/phpmd
-METRICS   := $(BIN)/phpmetrics
-INFECTION := $(BIN)/infection
+PHPUNIT    := $(BIN)/phpunit
+PHPCS      := $(BIN)/phpcs
+PHPMD      := $(BIN)/phpmd
+PHPMETRICS := $(BIN)/phpmetrics
+INFECTION  := $(BIN)/infection
 
 install: ## Install all PHP Tools (skip existing tools in ./vendor/bin)
 	$(call install_phar,$(PHPUNIT),https://phar.phpunit.de/phpunit-8.phar)
 	$(call install_phar,$(PHPCS),https://github.com/squizlabs/PHP_CodeSniffer/releases/download/3.4.2/phpcs.phar)
 	$(call install_phar,$(PHPMD),https://github.com/phpmd/phpmd/releases/download/2.6.1/phpmd.phar)
-	$(call install_phar,$(METRICS),https://github.com/phpmetrics/PhpMetrics/releases/download/v2.4.1/phpmetrics.phar)
+	$(call install_phar,$(PHPMETRICS),https://github.com/phpmetrics/PhpMetrics/releases/download/v2.4.1/phpmetrics.phar)
 	$(call install_phar,$(INFECTION),https://github.com/infection/infection/releases/download/0.13.1/infection.phar)
 
 check-tools: ## Check all Tools
@@ -40,7 +40,7 @@ check-tools: ## Check all Tools
 	$(call check_tools,$(PHPUNIT))
 	$(call check_tools,$(PHPCS))
 	$(call check_tools,$(PHPMD))
-	$(call check_tools,$(METRICS))
+	$(call check_tools,$(PHPMETRICS))
 	$(call check_tools,$(INFECTION))
 
 ---: ## ------------------------------------------------------------------------
