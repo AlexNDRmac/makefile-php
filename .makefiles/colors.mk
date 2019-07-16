@@ -33,10 +33,31 @@ On_Purple  = \033[45m
 On_Cyan    = \033[46m
 On_White   = \033[47m
 
-solid_line  = ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-dash_line   = ------------------------------------------------------------------------
-dots_line   = ........................................................................
-ascii_block = ██████████
+solid_line  = ━
+dash_line   = -
+dots_line   = .
+ascii_block = █
+
+# Print Color line, using defined CHAR, limited to defined lenght
+# example:
+#        $(call print_cline,$(Cyan),$(solid_line),80)
+# Will print `solid_line` with line lenght 80 chars
+define print_cline
+	printf "$(1)%0.s$(2)$(NC)" {1..$(3)} && echo
+endef
+
+.logo:
+	$(call print_cline,$(Cyan),$(solid_line),80)
+	@echo '            __  ___      __        _____ __           ____  __  ______ '
+	@echo '           /  |/  /___ _/ /_____  / __(_) /__        / __ \/ / / / __ \'
+	@echo '          / /|_/ / __ `/ //_/ _ \/ /_/ / / _ \______/ /_/ / /_/ / /_/ /'
+	@echo '         / /  / / /_/ / ,< /  __/ __/ / /  __/_____/ ____/ __  / ____/ '
+	@echo '        /_/  /_/\__,_/_/|_|\___/_/ /_/_/\___/     /_/   /_/ /_/_/      '
+	@echo '                                                                       '
+	$(call print_cline,$(Cyan),$(dash_line),80)
+	@echo "\t Makefile for Laravel projects$(NC)"
+	$(call print_cline,$(Cyan),$(solid_line),80)
+
 
 .show_colors:
 	@echo "Black:       $(Black)$(ascii_block)$(NC)\n"

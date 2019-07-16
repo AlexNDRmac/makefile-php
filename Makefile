@@ -36,15 +36,15 @@ install: ## Install all PHP Tools (skip existing tools in ./vendor/bin)
 	$(call install_phar,$(INFECTION),https://github.com/infection/infection/releases/download/0.13.1/infection.phar)
 
 check-tools: ## Check all Tools
-	php --version && echo
+	$(call check_tools,$(shell which php))
 	$(call check_tools,$(PHPUNIT))
 	$(call check_tools,$(PHPCS))
 	$(call check_tools,$(PHPMD))
 	$(call check_tools,$(PHPMETRICS))
 	$(call check_tools,$(INFECTION))
 
----: ## ------------------------------------------------------------------------
-help: ## Show this help and exit
+---: ## --------------------------------------------------------------
+help: .logo ## Show this help and exit
 	@echo "$(Yellow)Usage:$(NC)\n  make [target] [arguments]"
 	@echo ''
 	@echo "$(Yellow)Available targets:$(NC)"
