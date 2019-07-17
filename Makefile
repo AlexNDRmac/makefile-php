@@ -17,11 +17,13 @@ include ./.makefiles/functions.mk
 # =================================================================
 
 # Current Working Dir (Full path)
-CWD = $(shell cd $(shell dirname $(THIS_MAKEFILE)); pwd)
+CWD  = $(shell cd $(shell dirname $(THIS_MAKEFILE)); pwd)
 # Full path to `vendor/bin` directory
-BIN = $(CWD)/vendor/bin
+BIN  = $(CWD)/vendor/bin
 # Configuration for Tools, source url's
-SRC = $(CWD)/.makefiles/.sources.conf
+SRC  = $(CWD)/.makefiles/.sources.conf
+# Filter Makefile Input params to use they as target input params
+ARGS = $(filter-out $@, $(MAKECMDGOALS))
 
 # =================================================================
 # Common PHP Tools path
@@ -33,6 +35,12 @@ PHPCS      := $(BIN)/phpcs
 PHPMD      := $(BIN)/phpmd
 PHPMETRICS := $(BIN)/phpmetrics
 INFECTION  := $(BIN)/infection
+
+# =================================================================
+# Filter Input Params
+# =================================================================
+# filter for PHPUnit `--filter` param
+FILTER = $(if $(filter-out $@, $(ARGS)), --filter $(filter-out $@, $(ARGS)), "")
 
 
 # =================================================================
@@ -54,6 +62,25 @@ check-tools: ## Check all Tools
 	$(call check_tools,$(PHPMD))
 	$(call check_tools,$(PHPMETRICS))
 	$(call check_tools,$(INFECTION))
+
+
+---: ## --------------------------------------------------------------
+unit: ## Run Unit tests [testName - Filter which tests to run]
+	$(PHPUNIT) --no-coverage --testsuite=Unit $(FILTER)
+
+feature: ## Run Feature tests [testName - Filter which tests to run]
+	$(PHPUNIT) --no-coverage --testsuite=Feature $(FILTER)
+
+integration: ## Run Integration tests [testName - Filter which tests to run]
+	$(PHPUNIT) --no-coverage --testsuite=Integration $(FILTER)
+
+tests: ## Run all tests [testName - Filter which tests to run]
+	$(PHPUNIT) --no-coverage $(FILTER)
+
+coverage: ## Run all tests with Code Coverage report
+	$(PHPUNIT) --stop-on-failure \
+	&& echo "$(Green)SUCCSESS!$(NC)" || { echo "$(Red)FAILURE!$(NC)"; exit 1;}
+
 
 ---: ## --------------------------------------------------------------
 help: .logo ## Show this help and exit
