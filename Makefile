@@ -65,16 +65,16 @@ check-tools: ## Check all Tools
 
 
 ---: ## --------------------------------------------------------------
-unit: ## Run Unit tests [testName - Filter which tests to run]
+unit: ## Run Unit tests
 	$(PHPUNIT) --no-coverage --testsuite=Unit $(FILTER)
 
-feature: ## Run Feature tests [testName - Filter which tests to run]
+feature: ## Run Feature tests
 	$(PHPUNIT) --no-coverage --testsuite=Feature $(FILTER)
 
-integration: ## Run Integration tests [testName - Filter which tests to run]
+integration: ## Run Integration tests
 	$(PHPUNIT) --no-coverage --testsuite=Integration $(FILTER)
 
-tests: ## Run all tests [testName - Filter which tests to run]
+tests: ## Run all tests
 	$(PHPUNIT) --no-coverage $(FILTER)
 
 coverage: ## Run all tests with Code Coverage report
@@ -86,6 +86,8 @@ coverage: ## Run all tests with Code Coverage report
 help: .logo ## Show this help and exit
 	@echo "$(Yellow)Usage:$(NC)\n  make [target] [arguments]"
 	@echo ''
+	@echo "$(Yellow)Arguments:$(NC)"
+	printf "  $(Green)%-15s$(NC) %s\n" "testName" "for all test runners - Filter which tests to run"
 	@echo "$(Yellow)Targets:$(NC)"
 	@echo ''
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(THIS_MAKEFILE) | awk 'BEGIN {FS = ":.*?## "}; \

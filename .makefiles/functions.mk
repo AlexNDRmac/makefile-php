@@ -28,7 +28,7 @@ define check_tools
 	echo
 endef
 
-# Read param fro config file
+# Read param from config file
 # example:
 #        $(call config,PHPUNIT,./makefiles/.sources.conf)
 define config
