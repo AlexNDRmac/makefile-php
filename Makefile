@@ -23,7 +23,11 @@ BIN = $(CWD)/vendor/bin
 # Configuration for Tools, source url's
 SRC = $(CWD)/.makefiles/.sources.conf
 
+# =================================================================
 # Common PHP Tools path
+# To add new Tool, just add new line with NAME and PATH
+# After adding new PATH, ensure `install` and `check-tools` targets
+# =================================================================
 PHPUNIT    := $(BIN)/phpunit
 PHPCS      := $(BIN)/phpcs
 PHPMD      := $(BIN)/phpmd
