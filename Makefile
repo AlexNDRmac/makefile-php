@@ -33,6 +33,7 @@ ARGS = $(filter-out $@, $(MAKECMDGOALS))
 PHPUNIT    := $(BIN)/phpunit
 PHPCS      := $(BIN)/phpcs
 PHPMD      := $(BIN)/phpmd
+PHPSTAN    := $(BIN)/phpstan
 PHPMETRICS := $(BIN)/phpmetrics
 INFECTION  := $(BIN)/infection
 
@@ -52,6 +53,7 @@ install: ## Install all PHP Tools (skip existing tools in ./vendor/bin)
 	$(call install_phar,$(PHPUNIT),$(call config,PHPUNIT,$(SRC)))
 	$(call install_phar,$(PHPCS),$(call config,PHPCS,$(SRC)))
 	$(call install_phar,$(PHPMD),$(call config,PHPMD,$(SRC)))
+	$(call install_phar,$(PHPSTAN),$(call config,PHPSTAN,$(SRC)))
 	$(call install_phar,$(PHPMETRICS),$(call config,PHPMETRICS,$(SRC)))
 	$(call install_phar,$(INFECTION),$(call config,INFECTION,$(SRC)))
 
@@ -60,6 +62,7 @@ check-tools: ## Check all Tools
 	$(call check_tools,$(PHPUNIT))
 	$(call check_tools,$(PHPCS))
 	$(call check_tools,$(PHPMD))
+	$(call check_tools,$(PHPSTAN))
 	$(call check_tools,$(PHPMETRICS))
 	$(call check_tools,$(INFECTION))
 
