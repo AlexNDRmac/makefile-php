@@ -105,6 +105,14 @@ coverage: ## Run all tests with Code Coverage report
 	&& echo "$(Green)SUCCSESS!$(NC)" || { echo "$(Red)FAILURE!$(NC)"; exit 1;}
 	@echo "$(PHPUNIT_MSG)"
 
+metrics: ## Generate Code Metrics Report project
+	$(METRICS) --version
+	$(METRICS) --git \
+	$(CWD) \
+	--exclude=vendor,database,migrations,views,tests,storage,bootstrap,docker,resources \
+	--report-violations=$(REPORT_PATH)/violations.xml \
+	--report-html=$(REPORT_PATH)/metrics \
+	--junit=$(REPORT_PATH)/phpunit.junit.xml
 
 ---: ## --------------------------------------------------------------
 phpcs: ## Check Code Style with PHP CodeSniffer [opt.: path]
