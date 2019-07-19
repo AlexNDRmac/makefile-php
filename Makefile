@@ -25,6 +25,11 @@ SRC  = $(CWD)/.makefiles/.sources.conf
 # Filter Makefile Input params to use they as target input params
 ARGS = $(filter-out $@, $(MAKECMDGOALS))
 
+# Detect changed files in current Branch
+BRANCH        = `git rev-parse --abbrev-ref HEAD`
+BRANCH_BASE   = `git merge-base origin/master HEAD`
+CHANGED_FILES = $(shell git diff --name-only --diff-filter=ACMR $(BRANCH_BASE) HEAD | grep \.php | paste -sd "," -)
+
 # =================================================================
 # Common PHP Tools path
 # To add new Tool, just add new line with NAME and PATH
