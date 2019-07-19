@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit backupGlobals="false"
+         backupStaticAttributes="false"
+         bootstrap="vendor/autoload.php"
+         colors="true"
+         convertErrorsToExceptions="true"
+         convertNoticesToExceptions="true"
+         convertWarningsToExceptions="true"
+         processIsolation="false"
+         stopOnFailure="false">
+  <testsuites>
+    <testsuite name="Unit">
+      <directory suffix="Test.php">./tests/Unit</directory>
+    </testsuite>
+
+    <testsuite name="Feature">
+      <directory suffix="Test.php">./tests/Feature</directory>
+    </testsuite>
+
+    <testsuite name="Integration">
+      <directory suffix="Test.php">./tests/Integration</directory>
+    </testsuite>
+  </testsuites>
+  <filter>
+    <whitelist processUncoveredFilesFromWhitelist="true">
+      <directory suffix=".php">./app</directory>
+      <exclude>
+        <directory suffix=".php">./app/*/*/resources/views</directory>
+        <directory suffix=".php">./app/*/*/migrations</directory>
+      </exclude>
+    </whitelist>
+  </filter>
+  <logging>
+    <!-- Detailed HTML Report with Code Coverage -->
+    <log type="coverage-html" target="./storage/logs/coverage"
+         lowUpperBound="50" highLowerBound="90"/>
+    <!-- Coverage Info for Clover -->
+    <log type="coverage-clover" target="./storage/logs/clover.xml"/>
+    <!-- XML Code Coverage for Infection -->
+    <log type="coverage-xml" target="./storage/logs/coverage-xml"/>
+    <!-- Coverage Info For PHPMetrics and Infection -->
+    <log type="junit" target="./storage/logs/phpunit.junit.xml"/>
+  </logging>
+  <php>
+    <env name="APP_ENV" value="testing"/>
+    <env name="BCRYPT_ROUNDS" value="4"/>
+    <env name="CACHE_DRIVER" value="array"/>
+    <env name="SESSION_DRIVER" value="array"/>
+    <env name="QUEUE_DRIVER" value="sync"/>
+    <env name="MAIL_DRIVER" value="array"/>
+    <env name="DB_CONNECTION" value="mysql_test"/>
+    <env name="PHP_IDE_CONFIG" value="serverName=localhost"/>
+  </php>
+</phpunit>
