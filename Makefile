@@ -37,6 +37,9 @@ PHPSTAN    := $(BIN)/phpstan
 PHPMETRICS := $(BIN)/phpmetrics
 INFECTION  := $(BIN)/infection
 
+# Logs and Report path
+REPORT_PATH := $(CWD)/storage/logs
+
 # =================================================================
 # Filter Input Params
 # =================================================================
@@ -79,10 +82,12 @@ integration: ## Run Integration tests
 
 tests: ## Run all tests
 	$(PHPUNIT) --no-coverage $(FILTER)
+	&& echo "$(Green)SUCCSESS!$(NC)" || { echo "$(Red)FAILURE!$(NC)"; exit 1;}
 
 coverage: ## Run all tests with Code Coverage report
 	$(PHPUNIT) --stop-on-failure \
 	&& echo "$(Green)SUCCSESS!$(NC)" || { echo "$(Red)FAILURE!$(NC)"; exit 1;}
+	@echo "Code coverage report in HTML format: $(Cyan)$(REPORT_PATH)/coverage/index.html$(NC)"
 
 
 ---: ## --------------------------------------------------------------
