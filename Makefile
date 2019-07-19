@@ -40,6 +40,11 @@ INFECTION  := $(BIN)/infection
 # Logs and Report path
 REPORT_PATH := $(CWD)/storage/logs
 
+# Log Messages
+PHPUNIT_MSG := Code coverage report in HTML format:\n$(Cyan)$(REPORT_PATH)/coverage/index.html$(NC)
+PHPCS_MSG   := PHP CODE SNIFFER REPORT DETAILS:\n$(Cyan)$(REPORT_PATH)/phpcs_report.log$(NC)
+PHPMD_MSG   := PHP MESS DETECTOR REPORT DETAILS (HTML):\n$(Cyan)$(REPORT_PATH)/phpmd_report.html$(NC)
+
 # =================================================================
 # Filter Input Params
 # =================================================================
@@ -87,7 +92,7 @@ tests: ## Run all tests
 coverage: ## Run all tests with Code Coverage report
 	$(PHPUNIT) --stop-on-failure \
 	&& echo "$(Green)SUCCSESS!$(NC)" || { echo "$(Red)FAILURE!$(NC)"; exit 1;}
-	@echo "Code coverage report in HTML format: $(Cyan)$(REPORT_PATH)/coverage/index.html$(NC)"
+	@echo "$(PHPUNIT_MSG)"
 
 
 ---: ## --------------------------------------------------------------
