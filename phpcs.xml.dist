@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 
-<ruleset name="Makefile for Laravel projects">
+<ruleset name="Makefile for Laravel projects CodeSniffer Template">
   <!--
         The name attribute of the ruleset tag is displayed
         when running PHP_CodeSniffer with the -v command line
