@@ -6,3 +6,10 @@ Makefile: ;              # skip prerequisite discovery
 
 # Detect OS
 OS = $(shell uname -s)
+
+SHELL ?= /bin/bash
+
+# Set comma and space symbols for usage as substitution symbols
+comma  = ,
+space := # <- This Whitespace is Necessary for Substitution
+space +=

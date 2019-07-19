@@ -55,6 +55,8 @@ PHPMD_MSG   := PHP MESS DETECTOR REPORT DETAILS (HTML):\n$(Cyan)$(REPORT_PATH)/p
 # =================================================================
 # filter for PHPUnit `--filter` param
 FILTER = $(if $(filter-out $@, $(ARGS)), --filter $(filter-out $@, $(ARGS)), "")
+# collect only changed files in current Branch
+PHPCS_FILTER = $(if $(filter-out $@, $(ARGS)), $(filter-out $@, $(ARGS)), $(subst $(comma),$(space),$(CHANGED_FILES)))
 
 
 # =================================================================
@@ -99,6 +101,17 @@ coverage: ## Run all tests with Code Coverage report
 	&& echo "$(Green)SUCCSESS!$(NC)" || { echo "$(Red)FAILURE!$(NC)"; exit 1;}
 	@echo "$(PHPUNIT_MSG)"
 
+
+---: ## --------------------------------------------------------------
+phpcs: ## Check Code Style with PHP CodeSniffer [opt.: path]
+	$(PHPCS) --version
+	# -
+	$(PHPCS) \
+	--report-full=$(REPORT_PATH)/phpcs_report.log \
+	--report-diff --report-full $(PHPCS_FILTER) \
+	&& echo "$(Green)SUCCSESS!$(NC)" || { echo "$(Red)FAILURE!$(NC)\n${PHPCS_MSG}"; exit 1;}
+	# show full path to report
+	@echo "$(PHPCS_MSG)"
 
 ---: ## --------------------------------------------------------------
 help: .logo ## Show this help and exit
