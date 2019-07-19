@@ -20,13 +20,30 @@ You don't need to deeply know how to configure all Tools for Laravel project, Ma
 Usage:
   make [target] [arguments]
 
+Arguments:
+  testName        for all test runners - Filter which tests to run
+
 Targets:
 
   ---             --------------------------------------------------------------
   install         Install all PHP Tools (skip existing tools in ./vendor/bin)
   check-tools     Check all Tools
   ---             --------------------------------------------------------------
+  unit            Run Unit tests
+  feature         Run Feature tests
+  integration     Run Integration tests
+  tests           Run all tests
+  coverage        Run all tests with Code Coverage report
+  infection       Run Mutation Testing
+  ---             --------------------------------------------------------------
+  metrics         Generate Code Metrics Report project
+  ---             --------------------------------------------------------------
+  phpcs           Check Code Style with PHP CodeSniffer [opt.: path]
+  phpmd           Check Code Style with PHP MessDetector [opt.: path]
+  phpstan         Analyze Project with PHPStan [opt.: path]
+  ---             --------------------------------------------------------------
   help            Show this help and exit
+
 ```
 
 ## Features:
@@ -35,7 +52,8 @@ Targets:
 - Check tools
 - Run Unit, Feature, Integration Tests with PHPUnit
 - Run Mutation Tests with Infection
-- Analyze project with PHPStan, CodeSniffer, Mess Detector, PHP Metrics
+- Analyze project with PHPStan, CodeSniffer, Mess Detector
+- Collect PHP Metrics
 - Generate Code Coverage report
 
 (*) under development
