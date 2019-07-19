@@ -106,6 +106,13 @@ coverage: ## Run all tests with Code Coverage report
 	&& echo "$(Green)SUCCSESS!$(NC)" || { echo "$(Red)FAILURE!$(NC)"; exit 1;}
 	@echo "$(PHPUNIT_MSG)"
 
+infection: ## Run Mutation Testing
+	$(INFECTION) run \
+	--configuration=$(CWD)/infection.json \
+	--threads=4 --no-progress \
+	--coverage=$(REPORT_PATH) \
+	--show-mutations --ansi --only-covered \
+	--min-msi=60 --min-covered-msi=70
 
 ---: ## --------------------------------------------------------------
 metrics: ## Generate Code Metrics Report project
