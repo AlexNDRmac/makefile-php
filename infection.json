@@ -1,0 +1,25 @@
+{
+  "timeout": 15,
+  "source": {
+    "directories": [
+      "."
+    ],
+    "excludes": [
+      "bootstrap",
+      "storage",
+      "tests",
+      "vendor"
+    ]
+  },
+  "logs": {
+    "text": ".\/storage\/logs\/infection-log.txt",
+    "summary": ".\/storage\/logs\/infection-summary.log",
+    "perMutator": ".\/storage\/logs\/infection-per-mutator.md",
+    "badge": {
+      "branch": "master"
+    }
+  },
+  "testFramework": "phpunit",
+  "bootstrap": "./vendor/autoload.php",
+  "testFrameworkOptions": "-vvv"
+}
