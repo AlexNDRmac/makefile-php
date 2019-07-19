@@ -42,6 +42,10 @@ PHPSTAN    := $(BIN)/phpstan
 PHPMETRICS := $(BIN)/phpmetrics
 INFECTION  := $(BIN)/infection
 
+# Tools configuration
+PHPCS_RULES = $(if $(wildcard $(CWD)/phpcs.xml), $(CWD)/phpcs.xml, PSR2)
+PHPMD_RULES = $(if $(wildcard $(CWD)/phpmd.xml), $(CWD)/phpmd.xml, "cleancode,codesize,controversial,design,naming,unusedcode")
+
 # Logs and Report path
 REPORT_PATH := $(CWD)/storage/logs
 
@@ -107,6 +111,8 @@ phpcs: ## Check Code Style with PHP CodeSniffer [opt.: path]
 	$(PHPCS) --version
 	# -
 	$(PHPCS) \
+	--runtime-set ignore_warnings_on_exit true \
+	--standard=$(PHPCS_RULES) --parallel=2 \
 	--report-full=$(REPORT_PATH)/phpcs_report.log \
 	--report-diff --report-full $(PHPCS_FILTER) \
 	&& echo "$(Green)SUCCSESS!$(NC)" || { echo "$(Red)FAILURE!$(NC)\n${PHPCS_MSG}"; exit 1;}
@@ -119,6 +125,7 @@ help: .logo ## Show this help and exit
 	@echo ''
 	@echo "$(Yellow)Arguments:$(NC)"
 	printf "  $(Green)%-15s$(NC) %s\n" "testName" "for all test runners - Filter which tests to run"
+	@echo ''
 	@echo "$(Yellow)Targets:$(NC)"
 	@echo ''
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(THIS_MAKEFILE) | awk 'BEGIN {FS = ":.*?## "}; \
