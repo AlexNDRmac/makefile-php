@@ -146,6 +146,10 @@ phpmd: ## Check Code Style with PHP MessDetector [opt.: path]
 	@echo
 	@echo "$(PHPMD_MSG)"
 
+phpstan: ## Analyze Project with PHPStan [opt.: path]
+	$(PHPSTAN) --version
+	$(PHPSTAN) analyse --ansi --memory-limit=2G ./ \
+	&& echo "$(Green)SUCCSESS!$(NC)" || echo "$(Red)FAILURE!$(NC)"
 
 ---: ## --------------------------------------------------------------
 help: .logo ## Show this help and exit
