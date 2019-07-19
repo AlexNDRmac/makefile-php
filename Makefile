@@ -25,7 +25,7 @@ SRC  = $(CWD)/.makefiles/.sources.conf
 # Filter Makefile Input params to use they as target input params
 ARGS = $(filter-out $@, $(MAKECMDGOALS))
 
-# Detect changed files in current Branch
+# Detect changed files in current Branch (list of files, separated by comma)
 BRANCH        = `git rev-parse --abbrev-ref HEAD`
 BRANCH_BASE   = `git merge-base origin/master HEAD`
 CHANGED_FILES = $(shell git diff --name-only --diff-filter=ACMR $(BRANCH_BASE) HEAD | grep \.php | paste -sd "," -)
@@ -61,6 +61,7 @@ PHPMD_MSG   := PHP MESS DETECTOR REPORT DETAILS (HTML):\n$(Cyan)$(REPORT_PATH)/p
 FILTER = $(if $(filter-out $@, $(ARGS)), --filter $(filter-out $@, $(ARGS)), "")
 # collect only changed files in current Branch
 PHPCS_FILTER = $(if $(filter-out $@, $(ARGS)), $(filter-out $@, $(ARGS)), $(subst $(comma),$(space),$(CHANGED_FILES)))
+PHPMD_FILTER = $(if $(filter-out $@, $(ARGS)), $(filter-out $@, $(ARGS)), $(CHANGED_FILES))
 
 
 # =================================================================
@@ -105,6 +106,8 @@ coverage: ## Run all tests with Code Coverage report
 	&& echo "$(Green)SUCCSESS!$(NC)" || { echo "$(Red)FAILURE!$(NC)"; exit 1;}
 	@echo "$(PHPUNIT_MSG)"
 
+
+---: ## --------------------------------------------------------------
 metrics: ## Generate Code Metrics Report project
 	$(METRICS) --version
 	$(METRICS) --git \
@@ -113,6 +116,7 @@ metrics: ## Generate Code Metrics Report project
 	--report-violations=$(REPORT_PATH)/violations.xml \
 	--report-html=$(REPORT_PATH)/metrics \
 	--junit=$(REPORT_PATH)/phpunit.junit.xml
+
 
 ---: ## --------------------------------------------------------------
 phpcs: ## Check Code Style with PHP CodeSniffer [opt.: path]
@@ -126,6 +130,22 @@ phpcs: ## Check Code Style with PHP CodeSniffer [opt.: path]
 	&& echo "$(Green)SUCCSESS!$(NC)" || { echo "$(Red)FAILURE!$(NC)\n${PHPCS_MSG}"; exit 1;}
 	# show full path to report
 	@echo "$(PHPCS_MSG)"
+
+phpmd: ## Check Code Style with PHP MessDetector [opt.: path]
+	$(PHPMD) --version
+	# show Summary report
+	$(PHPMD) $(PHPMD_FILTER) text $(PHPMD_RULES) \
+	--ignore-violations-on-exit \
+	--reportfile $(REPORT_PATH)/phpmd_report.txt
+	# --
+	$(PHPMD) $(PHPMD_FILTER) html $(PHPMD_RULES) \
+	--reportfile $(REPORT_PATH)/phpmd_report.html \
+	&& echo "$(Green)SUCCSESS!$(NC)" \
+	|| (sed 's~$(CWD)~.~g' $(REPORT_PATH)/phpmd_report.txt && echo "\n$(Red)FAILURE!$(NC)")
+	# show full path to report
+	@echo
+	@echo "$(PHPMD_MSG)"
+
 
 ---: ## --------------------------------------------------------------
 help: .logo ## Show this help and exit
