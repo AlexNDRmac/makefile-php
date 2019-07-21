@@ -159,6 +159,15 @@ phpstan: ## Analyze Project with PHPStan [opt.: path]
 	&& echo "$(Green)SUCCSESS!$(NC)" || echo "$(Red)FAILURE!$(NC)"
 
 ---: ## --------------------------------------------------------------
+show-coverage: ## Open CodeCoverage Report in default browser.
+	open $(REPORT_PATH)/coverage/index.html
+
+show-metrics: ## Open PHP Metrics Report in default browser.
+	open $(REPORT_PATH)/metrics/index.html
+
+show-phpmd: ## Open Mess Detector Report in default browser.
+	open $(REPORT_PATH)/phpmd_report.html
+
 help: .logo ## Show this help and exit
 	@echo "$(Yellow)Usage:$(NC)\n  make [target] [arguments]"
 	@echo ''
