@@ -19,7 +19,7 @@ endef
 # example:
 #        $(call check_tools,./vendor/bin/phpunit)
 define check_tools
-	echo "$(Green)checking > $(1)$(NC)"
+	echo "$(Green)checking > $(subst $(CWD),".",$(1))$(NC)"
 	if test -f "$(1)"; then \
 		$(1) --version; \
 	else \
