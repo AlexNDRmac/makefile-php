@@ -50,7 +50,7 @@ PHPMD_RULES = $(if $(wildcard $(CWD)/phpmd.xml), $(CWD)/phpmd.xml, "cleancode,co
 REPORT_PATH := $(CWD)/storage/logs
 
 # Log Messages
-PHPUNIT_MSG := Code coverage report in HTML format:\n$(Cyan)$(REPORT_PATH)/coverage/index.html$(NC)
+PHPUNIT_MSG := CODE COVERAGE REPORT DETAILS (HTML):\n$(Cyan)$(REPORT_PATH)/coverage/index.html$(NC)
 PHPCS_MSG   := PHP CODE SNIFFER REPORT DETAILS:\n$(Cyan)$(REPORT_PATH)/phpcs_report.log$(NC)
 PHPMD_MSG   := PHP MESS DETECTOR REPORT DETAILS (HTML):\n$(Cyan)$(REPORT_PATH)/phpmd_report.html$(NC)
 
