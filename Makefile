@@ -69,6 +69,13 @@ PHPMD_FILTER = $(if $(filter-out $@, $(ARGS)), $(filter-out $@, $(ARGS)), $(CHAN
 # =================================================================
 
 ---: ## --------------------------------------------------------------
+configure: ## Set up Tools configuration (php*.xml) from Template
+	$(call copy_file,$(CWD)/phpunit.xml,$(CWD)/phpunit.xml.dist)
+	$(call copy_file,$(CWD)/phpcs.xml,$(CWD)/phpcs.xml.dist)
+	$(call copy_file,$(CWD)/phpmd.xml,$(CWD)/phpmd.xml.dist)
+	$(call copy_file,$(CWD)/phpstan.neon,$(CWD)/phpstan.neon.dist)
+	$(call copy_file,$(CWD)/infection.json,$(CWD)/infection.json.dist)
+
 install: ## Install all PHP Tools (skip existing tools in ./vendor/bin)
 	$(call install_phar,$(PHPUNIT),$(call config,PHPUNIT,$(SRC)))
 	$(call install_phar,$(PHPCS),$(call config,PHPCS,$(SRC)))
