@@ -34,3 +34,15 @@ endef
 define config
 	`grep -E $(1) $(2) | awk '{gsub(/$(1)=/,"")}1'`
 endef
+
+# Copy file if not exists
+# example:
+#        $(call copy_file,phpcs.xml,phpcs.xml.dist)
+define copy_file
+	if test -f "$(1)"; then \
+		echo "$(Yellow)exists > $(subst $(CWD),".",$(1))$(NC)"; \
+	else \
+		cp $(2) $(1); \
+		echo "$(Green)created > $(subst $(CWD),".",$(1))$(NC)"; \
+	fi
+endef
