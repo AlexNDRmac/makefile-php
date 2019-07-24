@@ -1,0 +1,220 @@
+version: 2
+
+aliases:
+  # CONSTANTS
+  - &composer_key_base composer-v1-
+  - &composer_key composer-v1-{{ checksum "composer.lock" }}
+
+  - &node_key_base node-v1-
+  - &node_key node-v1-{{ checksum "package-lock.json" }}
+
+  - &metrics_key_base metrics_cache-v1-
+  - &metrics_key metrics-cache-v1-{{ arch }}
+
+  # CACHES
+  - &restore_composer_cache
+    restore_cache:
+      keys:
+        - *composer_key
+        - *composer_key_base
+
+  - &save_composer_cache
+    save_cache:
+      key: *composer_key
+      paths:
+        - ./vendor
+
+  - &restore_node_cache
+    restore_cache:
+      keys:
+        - *node_key
+        - *node_key_base
+
+  - &save_node_cache
+    save_cache:
+      key: *node_key
+      paths:
+        - ./node_modules
+
+  - &restore_metrics_cache
+    restore_cache:
+      keys:
+        - *metrics_key
+        - *metrics_key_base
+
+  - &save_metrics_cache
+    save_cache:
+      key: *metrics_key
+      paths:
+        - ./storage/logs/metrics
+
+  # INSTALLS
+  - &composer_install
+    run:
+      name: Validate Composer | Install Composer
+      command: |
+        composer validate
+        composer config --global github-oauth.github.com $GITHUB_ACCESS_TOKEN
+        composer install --no-interaction --no-ansi --prefer-dist --no-suggest
+
+  - &artisan_setup
+    run:
+      when: always
+      name: Artisan | Generate Key
+      command: |
+        cp ./.env.circleci ./.env
+        php artisan config:clear
+        php artisan key:generate
+
+  - &node_setup
+    run:
+      name: NPM | Install
+      command: npm install
+
+
+  # PROCESSES
+  - &prepare_environment
+    run:
+      name: Install PHP extensions | PDO
+      command: sudo docker-php-ext-install pdo_mysql
+
+  - &prepare_db
+    run:
+      name: Prepare Database
+      command: |
+        dockerize -wait tcp://127.0.0.1:3306 -timeout 60s
+        php artisan migrate --no-interaction -vvv
+
+  - &run_webserver
+    run:
+      when: always
+      name: Run Laravel Server
+      command: php artisan serve
+      background: true
+
+  - &wait_for_http_server
+    run:
+      when: always
+      name: Wait for HTTP Server | Update Application Url
+      command: |
+        dockerize -wait tcp://127.0.0.1:8000 -timeout 60s
+        netstat -plnt
+        sed -i "s~APP_URL=.*~APP_URL=http://127.0.0.1:8000~" .env
+
+# This environment is set to every job (and the initial build).
+build_machine_environment: &build_machine_environment
+  docker:
+    - image: circleci/php:7.1-node-browsers
+    - image: circleci/mysql:5.7
+      environment:
+        MYSQL_USER: root
+        MYSQL_ALLOW_EMPTY_PASSWORD: yes
+        MYSQL_DATABASE: circle_test
+
+# WORKFLOW
+workflows:
+  version: 2
+  # Run this Workflow only for Pull Requests and Commits to Development branches
+  Code Review:
+    jobs:
+      - tests
+      - code style:
+          filters:
+            branches:
+              ignore: master
+
+# JOBS
+jobs:
+  # Run All Tests and Generate Coverage
+  tests:
+    working_directory: ~/app
+    <<: *build_machine_environment
+    steps:
+      - *prepare_environment
+
+      - checkout
+
+      - *restore_node_cache
+      - *node_setup
+      - *save_node_cache
+
+      # Restore vendor dir from the CircleCI cache to improve performance
+      - *restore_composer_cache
+      - *composer_install
+      # Setup Infection
+      - *infection_setup
+      - *save_composer_cache
+
+      # Prepare Application
+      - *prepare_db
+      - *artisan_setup
+
+      # Run Application
+      - *run_webserver
+      - *wait_for_http_server
+
+      # Run Test and generate Code Coverage Reports
+      - run:
+          when: always
+          name: Run Tests | Generate Code Coverage Report
+          command: make coverage
+
+      - store_test_results:
+          path: ./storage/logs
+      - store_artifacts:
+          path: ./storage/logs/coverage
+          destination: coverage
+
+      # Generate Code Metrics Report
+      - *restore_metrics_cache
+      - run:
+          when: always
+          name: Collect Code Metrics
+          command: make metrics
+      - *save_metrics_cache
+
+      - store_test_results:
+          path: ./storage/logs
+      - store_artifacts:
+          path: ./storage/logs/metrics
+          destination: metrics
+
+      # Run Mutation Testing
+      - run:
+          when: always
+          name: Mutation Testing
+          command: make infection
+
+      - store_artifacts:
+          path: ./storage/logs/infection-log.txt
+          destination: infection-log.txt
+
+  # Check CodeStyle
+  code style:
+    working_directory: ~/app
+    <<: *build_machine_environment
+    steps:
+      - *prepare_environment
+      - checkout
+      # Restore vendor dir from the CircleCI cache to improve performance
+      - *restore_composer_cache
+      - *composer_install
+      # Setup PHPStan
+      - *phpstan_setup
+      - *save_composer_cache
+
+      # Run Code Sniffer
+      - run:
+          when: always
+          name: Inspect with Code Sniffer
+          command: make phpcs
+      # Run Code Sniffer
+      - run:
+          when: always
+          name: Inspect with Mess Detector
+          command: make phpmd
+      # Run PHPStan
+      - run:
+          when: always
+          name: Inspect Code with PHPStan
+          command: make phpstan
