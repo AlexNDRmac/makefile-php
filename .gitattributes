@@ -1,0 +1,36 @@
+## GITATTRIBUTES FOR MAKEFILE-PHP PROJECT
+#
+# Details per file setting:
+#   text    These files should be normalized (i.e. convert CRLF to LF).
+#   binary  These files are binary and should be left untouched.
+#
+# Note that binary is a macro for -text -diff.
+######################################################################
+
+# Auto detect
+##   Handle line endings automatically for files detected as
+##   text and leave all files detected as binary untouched.
+##   This will handle all files NOT defined below.
+*                   text=auto
+
+Makefile            text eol=lf linguist-language=Makefile
+makefile            text eol=lf linguist-language=Makefile
+*.mk                text eol=lf linguist-language=Makefile
+
+*.conf              text eol=lf linguist-language=INI
+
+*.neon              text eol=lf linguist-language=YAML
+*.neon.dist         text eol=lf linguist-language=YAML
+*.yml               text eol=lf linguist-language=YAML
+*.xml               text eol=lf linguist-language=XML
+*.xml.dist          text eol=lf linguist-language=XML
+*.json              text eol=lf linguist-generated=false linguist-language=JSON
+*.json.dist         text eol=lf linguist-language=JSON
+
+*.md                text eol=lf linguist-language=Markdown linguist-documentation
+LICENSE             text eol=lf linguist-documentation
+
+.editorconfig       text eol=lf
+.gitignore          text eol=lf
+.gitattributes      text eol=lf
+.gitmodules         text eol=lf
