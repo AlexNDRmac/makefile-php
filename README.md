@@ -1,6 +1,6 @@
 # Makefile-php
 
-[![CircleCI](https://img.shields.io/circleci/build/github/AlexNDRmac/makefile-php?style=flat-square)](https://circleci.com/gh/AlexNDRmac/makefile-php
+[![CircleCI](https://img.shields.io/circleci/build/github/AlexNDRmac/makefile-php?style=flat-square)](https://circleci.com/gh/AlexNDRmac/makefile-php)
 
 ## Makefile for Laravel projects
 
