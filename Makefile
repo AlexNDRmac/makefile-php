@@ -77,6 +77,7 @@ configure: ## Set up Tools configuration (php*.xml) from Template
 	$(call copy_file,$(CWD)/infection.json,$(CWD)/infection.json.dist)
 
 install: ## Install all PHP Tools (skip existing tools in ./vendor/bin)
+	[ -d $(CWD)/vendor/bin ] || mkdir -p $(CWD)/vendor/bin
 	$(call install_phar,$(PHPUNIT),$(call config,PHPUNIT,$(SRC)))
 	$(call install_phar,$(PHPCS),$(call config,PHPCS,$(SRC)))
 	$(call install_phar,$(PHPMD),$(call config,PHPMD,$(SRC)))

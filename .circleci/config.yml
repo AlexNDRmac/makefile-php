@@ -1,3 +1,12 @@
+## Configuration file for CircleCi continuous integration (testing)
+##
+## This configuration used for testing Makefile with common Laravel projects
+##
+## Author:
+##    - AlexNDRmac (https://github.com/AlexNDRmac)
+##
+## Copyright 2019,  AlexNDRmac (https://github.com/AlexNDRmac/makefile-php), GNU GPL v3.0 License
+
 version: 2
 
 aliases:
@@ -117,120 +126,25 @@ workflows:
   # Run this Workflow only for Pull Requests and Commits to Development branches
   Code Review:
     jobs:
-      - run makefile
-      # - tests
-      #- code style:
-      #    filters:
-      #      branches:
-      #        ignore: master
+      - run_makefile
 
 # JOBS
 jobs:
   # Run Makefile
-  run makefile:
+  run_makefile:
     working_directory: ~/app
     <<: *build_machine_environment
     steps:
       - checkout
 
       - run:
-        - name: Install all Tools
-        - command: make install
+          name: Install all Tools
+          command: make install
 
       - run:
-        - name: Install Tools configuration
-        - command: make configure
+          name: Install Tools configuration
+          command: make configure
 
       - run:
-        - name: Check Tools
-        - command: make check-tools
-
-  # Run All Tests and Generate Coverage
-  tests:
-    working_directory: ~/app
-    <<: *build_machine_environment
-    steps:
-      - *prepare_environment
-
-      - checkout
-
-      - *restore_node_cache
-      - *node_setup
-      - *save_node_cache
-
-      # Restore vendor dir from the CircleCI cache to improve performance
-      - *restore_composer_cache
-      - *composer_install
-      - *save_composer_cache
-
-      # Prepare Application
-      - *prepare_db
-      - *artisan_setup
-
-      # Run Application
-      - *run_webserver
-      - *wait_for_http_server
-
-      # Run Test and generate Code Coverage Reports
-      - run:
-          when: always
-          name: Run Tests | Generate Code Coverage Report
-          command: make coverage
-
-      - store_test_results:
-          path: ./storage/logs
-      - store_artifacts:
-          path: ./storage/logs/coverage
-          destination: coverage
-
-      # Generate Code Metrics Report
-      - *restore_metrics_cache
-      - run:
-          when: always
-          name: Collect Code Metrics
-          command: make metrics
-      - *save_metrics_cache
-
-      - store_test_results:
-          path: ./storage/logs
-      - store_artifacts:
-          path: ./storage/logs/metrics
-          destination: metrics
-
-      # Run Mutation Testing
-      - run:
-          when: always
-          name: Mutation Testing
-          command: make infection
-
-      - store_artifacts:
-          path: ./storage/logs/infection-log.txt
-          destination: infection-log.txt
-
-  # Check CodeStyle
-  code style:
-    working_directory: ~/app
-    <<: *build_machine_environment
-    steps:
-      - *prepare_environment
-      - checkout
-      # Restore vendor dir from the CircleCI cache to improve performance
-      - *restore_composer_cache
-      - *composer_install
-      - *save_composer_cache
-
-      # Run Code Sniffer
-      - run:
-          when: always
-          name: Inspect with Code Sniffer
-          command: make phpcs
-      # Run Code Sniffer
-      - run:
-          when: always
-          name: Inspect with Mess Detector
-          command: make phpmd
-      # Run PHPStan
-      - run:
-          when: always
-          name: Inspect Code with PHPStan
-          command: make phpstan
+          name: Check Tools
+          command: make check-tools
