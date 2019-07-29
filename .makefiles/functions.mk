@@ -32,7 +32,7 @@ endef
 # example:
 #        $(call config,PHPUNIT,./makefiles/.sources.conf)
 define config
-	`grep -E $(1) $(2) | awk '{gsub(/$(1)=/,"")}1'`
+`grep -E $(1) $(2) | awk '{gsub(/$(1)=/,"")}1'`
 endef
 
 # Copy file if not exists
