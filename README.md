@@ -29,8 +29,9 @@ Example:
 Targets:
 
   ---             --------------------------------------------------------------
-  phpcs           Check Code Style with PHP CodeSniffer [opt.: path]
-  phpmd           Check Code Style with PHP MessDetector [opt.: path]
+  phpcs           Check code style with PHP CodeSniffer [opt.: path]
+  php-cs-fixer    Check code style with PHP CS Fixer (show diff only)
+  phpmd           Check code Style with PHP MessDetector [opt.: path]
   ---             --------------------------------------------------------------
   help            Show this help and exit
 
@@ -40,6 +41,7 @@ Targets:
 
 - Run `PHP Mess Detector` from your project `vendor/bin` directory using your `phpmd.xml` or `phpmd.xml.dist`
 - Run `PHP CodeSniffer` from your project `vendor/bin` directory using your `phpcs.xml` or `phpcs.xml.dist`
+- Run `PHP CodeFixer` from your project `vendor/bin` directory using your `.php_cs` or `php_cs.dist`
 
 ## How to run from command line:
 

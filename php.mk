@@ -61,8 +61,9 @@ REPORT_PATH := $(PROJECT_DIR)/storage/logs
 VENDOR_BIN := $(PROJECT_DIR)/vendor/bin
 
 ## Tools binary path
-PHPCS := $(VENDOR_BIN)/phpcs
-PHPMD := $(VENDOR_BIN)/phpmd
+PHPCS        := $(VENDOR_BIN)/phpcs
+PHPCS_FIX    := $(VENDOR_BIN)/php-cs-fixer
+PHPMD        := $(VENDOR_BIN)/phpmd
 
 ## Tools configuration files:
 PHPMD_CONFIG := $(shell find -f phpmd.xml* 2>/dev/null | head -n 1)
@@ -75,14 +76,18 @@ PHPMD_FILTER  = $(if $(filter-out $@, $(ARGS)), $(filter-out $@, $(ARGS)), $(if 
 
 .PHONY: help
 ---: ## --------------------------------------------------------------
-phpcs: ## Check Code Style with PHP CodeSniffer [opt.: path]
+phpcs: ## Check code style with PHP CodeSniffer [opt.: path]
 	$(PHPCS) --version
 	$(PHPCS) \
 	--report-full=$(REPORT_PATH)/phpcs_report.log \
 	--report-diff --report-full $(PHPCS_FILTER) \
 	&& echo "$(Green)SUCCSESS!$(NC)" || { echo "$(Red)FAILURE!$(NC)\n${PHPCS_LOG}"; exit 1;}
 
-phpmd: ## Check Code Style with PHP MessDetector [opt.: path]
+php-cs-fixer: ## Check code style with PHP CS Fixer (show diff only)
+	$(PHPCS_FIX) --version
+	$(PHPCS_FIX) fix --diff --dry-run -v
+
+phpmd: ## Check code style with PHP MessDetector [opt.: path]
 	$(PHPMD) --version
 	echo "config: $(PHPMD_RULES)"
 	$(PHPMD) $(strip $(PHPMD_FILTER)) text $(PHPMD_RULES) \
