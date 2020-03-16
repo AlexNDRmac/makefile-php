@@ -1,6 +1,6 @@
 # PHP Makefile
 
-[![CircleCI](https://img.shields.io/circleci/build/github/AlexNDRmac/makefile-php?style=flat-square)](https://circleci.com/gh/AlexNDRmac/makefile-php)
+[![Build][actions badge]][actions link]
 
 ## Makefile for common PHP projects
 
@@ -69,6 +69,8 @@ FAILURE!
 
 (*) under development
 
+[actions badge]: https://github.com/AlexNDRmac/makefile-php/workflows/Build/badge.svg
+[actions link]: https://github.com/AlexNDRmac/makefile-php/actions
 [phpcs link]: https://github.com/squizlabs/PHP_CodeSniffer
 [php-cs-fixer link]: https://github.com/FriendsOfPHP/PHP-CS-Fixer
 [phpmd link]: https://github.com/phpmd/phpmd
