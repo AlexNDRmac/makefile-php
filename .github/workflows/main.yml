@@ -32,9 +32,9 @@ jobs:
           extensions: gmp, psr, zip
 
       - name: Checkout code
-          uses: actions/checkout@v2-beta
-          with:
-            fetch-depth: 5
+        uses: actions/checkout@v2-beta
+        with:
+          fetch-depth: 5
 
       - name: Run default target
         run: make -f php.mk
