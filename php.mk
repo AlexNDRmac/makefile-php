@@ -71,7 +71,7 @@ PHPMD_RULES  := $(if $(PHPMD_CONFIG), $(PROJECT_DIR)/$(PHPMD_CONFIG), "cleancode
 ## Filters for makefile targets:
 CHANGED_FILES = $(shell git diff --name-only --diff-filter=ACMR $(BRANCH_BASE) HEAD | grep \.php | paste -sd "," -)
 PHPCS_FILTER  = $(if $(filter-out $@, $(ARGS)), $(filter-out $@, $(ARGS)), $(subst $(comma),$(space),$(CHANGED_FILES)))
-PHPMD_FILTER  = $(if $(filter-out $@, $(ARGS)), $(filter-out $@, $(ARGS)), $(CHANGED_FILES))
+PHPMD_FILTER  = $(if $(filter-out $@, $(ARGS)), $(filter-out $@, $(ARGS)), $(if $(CHANGED_FILES), $(CHANGED_FILES), .))
 
 .PHONY: help
 ---: ## --------------------------------------------------------------
@@ -85,7 +85,7 @@ phpcs: ## Check Code Style with PHP CodeSniffer [opt.: path]
 phpmd: ## Check Code Style with PHP MessDetector [opt.: path]
 	$(PHPMD) --version
 	echo "config: $(PHPMD_RULES)"
-	$(PHPMD) $(PHPMD_FILTER) text $(PHPMD_RULES) \
+	$(PHPMD) $(strip $(PHPMD_FILTER)) text $(PHPMD_RULES) \
 	--reportfile $(REPORT_PATH)/phpmd_report.txt \
 	&& echo "$(Green)SUCCSESS!$(NC)" \
 	|| (sed 's~$(CURDIR)~.~g' $(REPORT_PATH)/phpmd_report.txt && echo "\n$(Red)FAILURE!$(NC)")
