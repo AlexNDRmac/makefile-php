@@ -39,9 +39,9 @@ Targets:
 
 ## Features:
 
-- Run `PHP Mess Detector` from your project `vendor/bin` directory using your `phpmd.xml` or `phpmd.xml.dist`
-- Run `PHP CodeSniffer` from your project `vendor/bin` directory using your `phpcs.xml` or `phpcs.xml.dist`
-- Run `PHP CodeFixer` from your project `vendor/bin` directory using your `.php_cs` or `php_cs.dist`
+- Run [PHP Mess Detector][phpmd link] from your project `vendor/bin` directory using your `phpmd.xml` or `phpmd.xml.dist`
+- Run [PHP CodeSniffer][phpcs link] from your project `vendor/bin` directory using your `phpcs.xml` or `phpcs.xml.dist`
+- Run [PHP CodeFixer][php-cs-fixer link] from your project `vendor/bin` directory using your `.php_cs` or `php_cs.dist`
 
 ## How to run from command line:
 
@@ -68,3 +68,7 @@ FAILURE!
 ```
 
 (*) under development
+
+[phpcs link]: https://github.com/squizlabs/PHP_CodeSniffer
+[php-cs-fixer link]: https://github.com/FriendsOfPHP/PHP-CS-Fixer
+[phpmd link]: https://github.com/phpmd/phpmd
