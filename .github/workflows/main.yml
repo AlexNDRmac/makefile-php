@@ -24,7 +24,7 @@ jobs:
             osname: macOS
             php: 7.4
 
-    name: "PHP Make ${{ matrix.osname }}"
+    name: "${{ matrix.options.osname }} PHP ${{ matrix.options.php }}"
     runs-on: ${{matrix.options.os}}
 
     steps:
@@ -38,7 +38,7 @@ jobs:
         with:
           php-version: ${{ matrix.php }}
           extensions: gmp, psr, zip
-          tools: phpize, php-config
+          tools: phpize, php-config, php-version
 
       - name: Run default target
         run: make -f php.mk
