@@ -10,38 +10,41 @@ on:
 
 jobs:
   phpmake:
-    name: "PHP Make ${{ matrix.osname }}"
-    runs-on: ${{ matrix.os }}
-
     strategy:
       fail-fast: false
 
       matrix:
-        name:
-          - ubuntu-16.04
-          - macOS-latest
+        options:
+          - name: Ubuntu
+          os: ubuntu-18.04
+          osname: Linux
+          php: 7.3
+          - name: macOS
+          os: macOS-latest
+          osname: macOS
+          php: 7.4
 
-        include:
-          - name: ubuntu-16.04
-            os: ubuntu-16.04
-            osname: Linux
-            php: 7.3
+    name: "PHP Make ${{ matrix.osname }}"
+    runs-on: ${{matrix.options.os}}
 
-          - name: macOS-latest
-            os: macOS-latest
-            osname: macOS
-            php: 7.4
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 5
+
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php }}
           extensions: gmp, psr, zip
-
-      - name: Checkout code
-        uses: actions/checkout@v2-beta
-        with:
-          fetch-depth: 5
+          tools: phpize, php-config
 
       - name: Run default target
         run: make -f php.mk
+
+      - name: Check libtool
+        run: |
+          ls -lah /usr/share/libtool
+          ls -lah /usr/share/libtool/build-aux
+          libtool --version
