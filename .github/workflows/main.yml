@@ -42,9 +42,3 @@ jobs:
 
       - name: Run default target
         run: make -f php.mk
-
-      - name: Check libtool
-        run: |
-          ls -lah /usr/share/libtool
-          ls -lah /usr/share/libtool/build-aux
-          libtool --version
