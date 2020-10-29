@@ -36,9 +36,9 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: ${{ matrix.php }}
+          php-version: ${{ matrix.options.php }}
           extensions: gmp, psr, zip
-          tools: phpize, php-config, php-version
+          tools: phpize, php-config
 
       - name: Run default target
         run: make -f php.mk
