@@ -16,13 +16,13 @@ jobs:
       matrix:
         options:
           - name: Ubuntu
-          os: ubuntu-18.04
-          osname: Linux
-          php: 7.3
+            os: ubuntu-18.04
+            osname: Linux
+            php: 7.3
           - name: macOS
-          os: macOS-latest
-          osname: macOS
-          php: 7.4
+            os: macOS-latest
+            osname: macOS
+            php: 7.4
 
     name: "PHP Make ${{ matrix.osname }}"
     runs-on: ${{matrix.options.os}}
