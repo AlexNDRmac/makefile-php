@@ -10,18 +10,19 @@ on:
 
 jobs:
   build:
+    runs-on: ubuntu-20.04
+    env:
+      COMPOSER_NO_INTERACTION: 1
+
     strategy:
       fail-fast: false
 
       matrix:
-        os:
-          - ubuntu-20.04
         php-version:
           - '7.4'
           - '8.0'
 
-    name: "${{ matrix.os }} PHP ${{ matrix.php-version }}"
-    runs-on: ${{matrix.os}}
+    name: "Run with PHP ${{ matrix.php-version }}"
 
     steps:
       - name: Checkout code
@@ -52,6 +53,6 @@ jobs:
         run: |
           composer install --prefer-dist --no-interaction --no-ansi --no-suggest --no-scripts
 
-      - name: PHPCS
+      - name: Run PHPCS for the codestyle
         run: |
           make phpcs
