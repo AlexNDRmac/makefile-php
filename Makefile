@@ -32,6 +32,11 @@ phpcs: ## Run PHP_CodeSniffer inspection
 	./vendor/bin/phpcs --version
 	./vendor/bin/phpcs
 
+.PHONY: phpmd
+phpmd: ## Run PHP Mess Detector inspection
+	./vendor/bin/phpmd --version
+	./vendor/bin/phpmd /src,/tests text phpmd.xml.dist
+
 ---: ## ----------------------------------------------------
 .PHONY: help
 help: .title ## Show this help and exit
