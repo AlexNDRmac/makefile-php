@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<ruleset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/squizlabs/PHP_CodeSniffer/master/phpcs.xsd"
+    name="PHP Project CodeSniffer Template">
+
+  <!--
+    The name attribute of the ruleset tag is displayed
+    when running PHP_CodeSniffer with the -v command line
+    argument. The description tag below is not displayed anywhere
+    except in this file, so it can contain information for
+    developers who may change this file in the future.
+  -->
+  <description>Check the code of the sniffs for the Project</description>
+
+  <!-- Use PSR-12 as a base -->
+  <rule ref="PSR12"/>
+
+  <!--
+    If no files or directories are specified on the command line
+    your custom standard can specify what files should be checked
+    instead.
+    Note that specifying any file or directory path
+    on the command line will ignore all file tags.
+  -->
+  <file>./src</file>
+  <file>./tests</file>
+
+  <!--
+      You can hard-code command line values into your custom standard.
+      Note that this does not work for the command line values:
+      -v[v][v], -l, -d, ––sniffs and ––standard
+
+      The following tags are equivalent to the command line arguments:
+      ––extensions=php,inc ––report=summary ––colors -sp
+  -->
+
+  <arg name="basepath" value="."/>
+
+  <!-- Show sniff codes in all reports -->
+  <arg value="s"/>
+
+  <!-- Use colors in progress or report -->
+  <arg name="colors" />
+
+  <!-- Show progress of the run -->
+  <arg value="p"/>
+
+  <arg name="parallel" value="8"/>
+
+  <arg name="report-width" value="120" />
+  <arg name="extensions" value="php" />
+
+  <!--
+    Hard-code ignore patterns directly into custom standard
+    so we don't have to specify the patterns on the command line.
+  -->
+  <exclude-pattern>src/migrations/*.php</exclude-pattern>
+  <exclude-pattern>tests/output/*</exclude-pattern>
+
+  <!--
+    This sniff checks the cyclomatic complexity for functions
+    by counting the different paths the function includes.
+  -->
+  <rule ref="Generic.Metrics.CyclomaticComplexity">
+    <properties>
+      <property name="complexity" value="5" />
+      <property name="absoluteComplexity" value="30" />
+    </properties>
+  </rule>
+
+  <rule ref="Generic.PHP.Syntax"/>
+  <rule ref="Generic.CodeAnalysis"/>
+
+  <!--
+    This sniff checks how many level deep that code is nested within a function.
+  -->
+  <rule ref="Generic.Metrics.NestingLevel">
+    <properties>
+      <property name="nestingLevel" value="8"/>
+      <property name="absoluteNestingLevel" value="12"/>
+    </properties>
+  </rule>
+
+  <!--
+    Do not warn for a line that only contains a comment,
+    no matter how long the line is.
+  -->
+  <rule ref="Generic.Files.LineLength">
+    <properties>
+      <property name="ignoreComments" value="true" />
+    </properties>
+  </rule>
+
+</ruleset>
