@@ -27,6 +27,12 @@ endif
 	$(info $(APP_NAME) v$(VERSION))
 
 ---: ## ----------------------------------------------------
+.PHONY: phpcs
+phpcs: ## Run PHP_CodeSniffer inspection
+	./vendor/bin/phpcs --version
+	./vendor/bin/phpcs
+
+---: ## ----------------------------------------------------
 .PHONY: help
 help: .title ## Show this help and exit
 	echo ''
