@@ -66,6 +66,10 @@ jobs:
         run: |
           make infection
 
+      - name: Generate PHP Metrics HTML report for Project
+        run: |
+          make metrics
+
       - name: Attach build artifacts to workflow
         if: always()
         uses: actions/upload-artifact@v2
