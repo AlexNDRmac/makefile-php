@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit backupGlobals="false"
+         backupStaticAttributes="false"
+         bootstrap="vendor/autoload.php"
+         colors="true"
+         convertErrorsToExceptions="true"
+         convertNoticesToExceptions="true"
+         convertWarningsToExceptions="true"
+         processIsolation="false"
+         stopOnFailure="false"
+         stopOnError="false"
+         stopOnIncomplete="false"
+         stopOnSkipped="false"
+         stopOnRisky="false"
+>
+
+  <testsuites>
+    <testsuite name="Unit">
+      <directory suffix="Test.php">./tests/Unit</directory>
+    </testsuite>
+
+    <testsuite name="Feature">
+      <directory suffix="Test.php">./tests/Feature</directory>
+    </testsuite>
+
+    <testsuite name="Integration">
+      <directory suffix="Test.php">./tests/Integration</directory>
+    </testsuite>
+  </testsuites>
+
+  <!--  Configures the code coverage reports to be generated.-->
+  <coverage cacheDirectory="./storage/logs/coverage-cache"
+            includeUncoveredFiles="true"
+            processUncoveredFiles="true"
+            pathCoverage="false"
+            ignoreDeprecatedCodeUnits="true"
+            disableCodeCoverageIgnore="true">
+    <include>
+      <directory suffix=".php">./src</directory>
+    </include>
+
+    <report>
+      <clover outputFile="./storage/logs/clover.xml"/>
+      <!-- Detailed HTML Report with Code Coverage -->
+      <html outputDirectory="./storage/logs/coverage-html" lowUpperBound="35" highLowerBound="70"/>
+      <text outputFile="./storage/logs/coverage-summary.txt" showUncoveredFiles="false" showOnlySummary="true"/>
+      <!-- XML Code Coverage for Infection -->
+      <xml outputDirectory="./storage/logs/coverage-xml"/>
+    </report>
+  </coverage>
+
+  <logging>
+    <!-- Coverage Info For PHPMetrics and Infection -->
+    <junit outputFile="./storage/logs/junit.xml"/>
+  </logging>
+
+  <php>
+    <!-- MySql-->
+    <const name="TEST_MYSQL_DB_HOST" value="127.0.0.1" />
+    <const name="TEST_MYSQL_DB_NAME" value="php_template" />
+    <const name="TEST_MYSQL_DB_PORT" value="3306" />
+    <const name="TEST_MYSQL_DB_USER" value="root" />
+    <const name="TEST_MYSQL_DB_PASS" value="" />
+
+    <!-- Common Laravel config -->
+    <env name="APP_ENV" value="testing"/>
+    <env name="BCRYPT_ROUNDS" value="4"/>
+    <env name="CACHE_DRIVER" value="array"/>
+    <env name="SESSION_DRIVER" value="array"/>
+    <env name="QUEUE_DRIVER" value="sync"/>
+    <env name="MAIL_DRIVER" value="array"/>
+    <env name="DB_CONNECTION" value="mysql_test"/>
+    <!-- End of Common Laravel config -->
+
+    <env name="PHP_IDE_CONFIG" value="serverName=localhost"/>
+  </php>
+
+</phpunit>
