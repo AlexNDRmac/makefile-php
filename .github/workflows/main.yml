@@ -16,7 +16,6 @@ jobs:
       matrix:
         os:
           - ubuntu-20.04
-          - macOS-latest
         php-version:
           - '7.4'
           - '8.0'
