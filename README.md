@@ -1,76 +1,46 @@
-# PHP Makefile
+# PHP Project Template
 
 [![Build][actions badge]][actions link]
 
-## Makefile for common PHP projects
+## Template for common PHP projects
 
-This Makefile helps PHP developers with running all necessary PHP tools as simple as possible. You can use this Makefile on local machine and various CI and with PHPStorm as `Run configurations`
-
-You don't need to deeply know how to configure all Tools for Laravel or any other project, Makefile already have configuration Templates for all Tools (of course you can modify it if you wish).
+This Template helps PHP developers with running most common PHP tools as simple as possible.
 
 ## How it looks
 
 ```txt
+PHP Project Template v1.0.0
 
-██████╗ ██╗  ██╗██████╗     ███╗   ███╗ █████╗ ██╗  ██╗███████╗
-██╔══██╗██║  ██║██╔══██╗    ████╗ ████║██╔══██╗██║ ██╔╝██╔════╝
-██████╔╝███████║██████╔╝    ██╔████╔██║███████║█████╔╝ █████╗  
-██╔═══╝ ██╔══██║██╔═══╝     ██║╚██╔╝██║██╔══██║██╔═██╗ ██╔══╝  
-██║     ██║  ██║██║         ██║ ╚═╝ ██║██║  ██║██║  ██╗███████╗
-╚═╝     ╚═╝  ╚═╝╚═╝         ╚═╝     ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝
+Usage: make <target> [ENV_VAR=VALUE ...]
 
-Usage:
-  make -f php.mk <target> <target options>
+Available targets:
 
-Example:
-  make -f php.mk phpcs
-  make -f php.mk phpmd ./App
-
-Targets:
-
-  ---             --------------------------------------------------------------
-  phpcs           Check code style with PHP CodeSniffer [opt.: path]
-  php-cs-fixer    Check code style with PHP CS Fixer (show diff only)
-  phpmd           Check code Style with PHP MessDetector [opt.: path]
-  ---             --------------------------------------------------------------
+  ---             ----------------------------------------------------
+  phpcs           Run PHP_CodeSniffer inspection
+  phpmd           Run PHP Mess Detector inspection
+  tests           Run PHPUnit tests
+  infection       PHP Mutation Testing
+  ---             ----------------------------------------------------
+  metrics         Generate PHP Metrics HTML report
+  ---             ----------------------------------------------------
   help            Show this help and exit
-
 ```
 
 ## Features
 
-- Run [PHP Mess Detector][phpmd link] from your project `vendor/bin` directory using your `phpmd.xml` or `phpmd.xml.dist`
 - Run [PHP CodeSniffer][phpcs link] from your project `vendor/bin` directory using your `phpcs.xml` or `phpcs.xml.dist`
-- Run [PHP CodeFixer][php-cs-fixer link] from your project `vendor/bin` directory using your `.php_cs` or `php_cs.dist`
+- Run [PHP Mess Detector][phpmd link] from your project `vendor/bin` directory using your `phpmd.xml` or `phpmd.xml.dist`
+- Execute [PHPUnit][phpunit link] tests and generates code coverage html report
+- Execute AST based [PHP Mutation Testing][infection link]
+- Generates HTML report with [Metrics][metrics link] about PHP project and classes
 
-## How to run from command line
 
-- Just copy or create symlink `php.mk` to yor PHP project root
-- Create (if not already exists) directory for logs: `./storage/logs`
-- Run make with file `php.mk`
+<!-- All external links should be here -->
 
-## Examples
-
-When you run `phpmd` target of `php.mk`, makefile detects automatically your rules file for MessDetector (`phpmd.xml` or `phpmd.xml.dist`).
-If any configuration file not found - all available phpmd rules will be used: `cleancode,codesize,controversial,design,naming,unusedcode`
-
-When you run `php.mk phpmd` without any args (directory path) - by defaults, will be used filter for changed `php` files if they changed or `current project directory` path
-
-```bash
-make -f php.mk phpmd ./Library,unit-tests
-
-## Example output:
-PHPMD 2.7.0snapshot201907302127
-config:  /path-to-your-project/phpmd.xml.dist
-./Library/ArgInfoDefinition.php:17 The class ArgInfoDefinition has an overall complexity of 51 which is very high. The configured complexity threshold is 50.
-...
-FAILURE!
-```
-
-(*) under development
-
-[actions badge]: https://github.com/AlexNDRmac/makefile-php/workflows/Build/badge.svg
-[actions link]: https://github.com/AlexNDRmac/makefile-php/actions
-[phpcs link]: https://github.com/squizlabs/PHP_CodeSniffer
-[php-cs-fixer link]: https://github.com/FriendsOfPHP/PHP-CS-Fixer
-[phpmd link]: https://github.com/phpmd/phpmd
+[actions badge]:    https://github.com/AlexNDRmac/makefile-php/workflows/Build/badge.svg
+[actions link]:     https://github.com/AlexNDRmac/makefile-php/actions
+[phpcs link]:       https://github.com/squizlabs/PHP_CodeSniffer
+[phpmd link]:       https://github.com/phpmd/phpmd
+[phpunit link]:     https://github.com/sebastianbergmann/phpunit
+[infection link]:   https://github.com/infection/infection
+[metrics link]:     https://github.com/phpmetrics/PhpMetrics
