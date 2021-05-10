@@ -30,9 +30,7 @@ endif
 .PHONY: help
 help: .title ## Show this help and exit
 	echo ''
-	echo 'Usage:'
-	echo ''
-	echo '    make <target> [ENV_VAR=VALUE ...]'
+	echo 'Usage: make <target> [ENV_VAR=VALUE ...]'
 	echo ''
 	echo 'Available targets:'
 	echo ''
