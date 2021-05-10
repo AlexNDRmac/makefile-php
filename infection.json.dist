@@ -2,13 +2,7 @@
   "timeout": 15,
   "source": {
     "directories": [
-      "."
-    ],
-    "excludes": [
-      "bootstrap",
-      "storage",
-      "tests",
-      "vendor"
+      "./src"
     ]
   },
   "logs": {
@@ -20,6 +14,5 @@
     }
   },
   "testFramework": "phpunit",
-  "bootstrap": "./vendor/autoload.php",
-  "testFrameworkOptions": "-vvv"
+  "bootstrap": "./vendor/autoload.php"
 }

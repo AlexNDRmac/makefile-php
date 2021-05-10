@@ -1,0 +1,41 @@
+{
+  "name": "alexndrmac/php-project-template",
+  "description": "PHP project template for common PHP apps development",
+  "type": "project",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "AlexNDRmac",
+      "email": "alexndr.mac@gmail.com"
+    }
+  ],
+  "require": {
+    "php": "^7.4 || ^8.0"
+  },
+  "require-dev": {
+    "infection/infection": "^0.21.1",
+    "phpmetrics/phpmetrics": "^2.7",
+    "phpunit/phpunit": "^9.5",
+    "squizlabs/php_codesniffer": "^3.5",
+    "phpmd/phpmd": "^2.10"
+  },
+  "autoload": {
+    "psr-4": {
+      "Example\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Tests\\": "tests/"
+    }
+  },
+  "config": {
+    "optimize-autoloader": false,
+    "preferred-install": {
+      "*": "dist"
+    },
+    "sort-packages": true
+  },
+  "prefer-stable": true,
+  "minimum-stability": "dev"
+}

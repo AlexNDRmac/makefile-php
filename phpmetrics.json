@@ -1,0 +1,20 @@
+{
+  "includes": [
+    "./src"
+  ],
+  "exclude": [
+    "./tests"
+  ],
+  "report": {
+    "html": "storage/logs/metrics",
+    "violations": "storage/logs/violations.xml"
+  },
+  "plugins": {
+    "git": {
+      "binary": "git"
+    },
+    "junit": {
+      "file": "storage/logs/junit.xml"
+    }
+  }
+}
