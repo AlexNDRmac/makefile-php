@@ -36,6 +36,7 @@ jobs:
           php-version: ${{ matrix.php-version }}
           extensions: psr, zip
           tools: composer:v2
+          coverage: xdebug
 
       - name: Get Composer Cache Dev
         id: composer-cache-dev
@@ -56,3 +57,21 @@ jobs:
       - name: Run PHPCS for the codestyle
         run: |
           make phpcs
+
+      - name: Run PHPUnit tests
+        run: |
+          make tests
+
+      - name: Run PHP Mutation Testing
+        run: |
+          make infection
+
+      - name: Attach build artifacts to workflow
+        if: always()
+        uses: actions/upload-artifact@v2
+        with:
+          name: logs-${{ matrix.php-versions }}
+          path: |
+            ${{ github.workspace }}/storage/logs/
+            !${{ github.workspace }}/storage/logs/.gitignore
+          retention-days: 1

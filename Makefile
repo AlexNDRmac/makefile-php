@@ -42,6 +42,10 @@ tests: ## Run PHPUnit tests
 	./vendor/bin/phpunit
 	cat storage/logs/coverage-summary.txt
 
+.PHONY: infection
+infection: ## PHP Mutation Testing
+	./vendor/bin/infection
+
 ---: ## ----------------------------------------------------
 .PHONY: help
 help: .title ## Show this help and exit
