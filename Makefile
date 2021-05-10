@@ -37,6 +37,11 @@ phpmd: ## Run PHP Mess Detector inspection
 	./vendor/bin/phpmd --version
 	./vendor/bin/phpmd /src,/tests text phpmd.xml.dist
 
+.PHONY: tests
+tests: ## Run PHPUnit tests
+	./vendor/bin/phpunit
+	cat storage/logs/coverage-summary.txt
+
 ---: ## ----------------------------------------------------
 .PHONY: help
 help: .title ## Show this help and exit
