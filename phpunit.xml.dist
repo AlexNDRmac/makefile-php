@@ -19,6 +19,7 @@
       <directory suffix="Test.php">./tests/Unit</directory>
     </testsuite>
 
+    <!-- Uncomment to enable test suites
     <testsuite name="Feature">
       <directory suffix="Test.php">./tests/Feature</directory>
     </testsuite>
@@ -26,6 +27,7 @@
     <testsuite name="Integration">
       <directory suffix="Test.php">./tests/Integration</directory>
     </testsuite>
+    -->
   </testsuites>
 
   <!--  Configures the code coverage reports to be generated.-->

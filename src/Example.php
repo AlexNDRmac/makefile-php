@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_type=1);
+declare(strict_types=1);
 
 namespace Example;
 
@@ -10,7 +10,7 @@ final class Example
     private $name;
 
     /**
-     * @param $name Example name
+     * @param string $name Example name
      */
     public function __construct(string $name)
     {
