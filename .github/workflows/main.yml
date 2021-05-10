@@ -4,28 +4,27 @@ on:
   push:
     paths-ignore:
       - '**.md'
+    tags:
+      - '**'
   pull_request:
     branches:
       - master
 
 jobs:
-  phpmake:
+  build:
     strategy:
       fail-fast: false
 
       matrix:
-        options:
-          - name: Ubuntu
-            os: ubuntu-18.04
-            osname: Linux
-            php: 7.3
-          - name: macOS
-            os: macOS-latest
-            osname: macOS
-            php: 7.4
+        os:
+          - ubuntu-20.04
+          - macOS-latest
+        php-version:
+          - '7.4'
+          - '8.0'
 
-    name: "${{ matrix.options.osname }} PHP ${{ matrix.options.php }}"
-    runs-on: ${{matrix.options.os}}
+    name: "${{ matrix.os }} PHP ${{ matrix.php-version }}"
+    runs-on: ${{matrix.os}}
 
     steps:
       - name: Checkout code
@@ -36,9 +35,26 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: ${{ matrix.options.php }}
-          extensions: gmp, psr, zip
-          tools: phpize, php-config
+          php-version: ${{ matrix.php-version }}
+          extensions: psr, zip
+          tools: composer:v2
 
-      - name: Run default target
-        run: make -f php.mk
+      - name: Get Composer Cache Dev
+        id: composer-cache-dev
+        run: |
+          echo "::set-output name=dir::$(composer config cache-files-dir)"
+
+      - uses: actions/cache@v2
+        with:
+          path: ${{ steps.composer-cache-dev.outputs.dir }}
+          key: ${{ runner.os }}-composer-dev-${{ hashFiles('**/composer.json') }}
+          restore-keys: |
+            ${{ runner.os }}-composer-dev-
+
+      - name: Composer Install Dev
+        run: |
+          composer install --prefer-dist --no-interaction --no-ansi --no-suggest --no-scripts
+
+      - name: PHPCS
+        run: |
+          make phpcs
