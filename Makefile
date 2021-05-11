@@ -1,6 +1,7 @@
 APP_NAME = PHP Project Template
 
 SHELL ?= /bin/bash
+PARALLELISM := $(shell getconf _NPROCESSORS_ONLN)
 # Determine this Makefile as Main file
 THIS_MAKEFILE := $(word $(words $(MAKEFILE_LIST)), $(MAKEFILE_LIST))
 ARGS = $(filter-out $@,$(MAKECMDGOALS))
@@ -32,7 +33,7 @@ OUTPUT_DIR := storage/logs
 .PHONY: phpcs
 phpcs: ## Run PHP_CodeSniffer inspection
 	./vendor/bin/phpcs --version
-	./vendor/bin/phpcs
+	./vendor/bin/phpcs $(CLI_OPTIONS)
 
 .PHONY: phpmd
 phpmd: ## Run PHP Mess Detector inspection
@@ -41,12 +42,13 @@ phpmd: ## Run PHP Mess Detector inspection
 
 .PHONY: tests
 tests: ## Run PHPUnit tests
-	./vendor/bin/phpunit
+	./vendor/bin/phpunit $(CLI_OPTIONS)
 	cat $(OUTPUT_DIR)/coverage-summary.txt
 
 .PHONY: infection
 infection: ## PHP Mutation Testing
-	./vendor/bin/infection
+	./vendor/bin/infection --threads=$(PARALLELISM) \
+		--coverage=$(OUTPUT_DIR) $(CLI_OPTIONS)
 	echo "See detailed reports: ./$(OUTPUT_DIR)"
 	ls ./$(OUTPUT_DIR)/ | grep infection
 
@@ -63,7 +65,7 @@ metrics: ## Generate PHP Metrics HTML report
 .PHONY: help
 help: .title ## Show this help and exit
 	echo ''
-	echo 'Usage: make <target> [ENV_VAR=VALUE ...]'
+	echo 'Usage: make <target> [ENV_VAR=VALUE ...] [CLI_OPTIONS="--tool-cli-args"]'
 	echo ''
 	echo 'Available targets:'
 	echo ''
