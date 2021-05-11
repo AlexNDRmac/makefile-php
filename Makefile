@@ -38,7 +38,11 @@ phpcs: ## Run PHP_CodeSniffer inspection
 .PHONY: phpmd
 phpmd: ## Run PHP Mess Detector inspection
 	./vendor/bin/phpmd --version
-	./vendor/bin/phpmd /src,/tests text phpmd.xml.dist
+	
+	FORMAT=text
+	if [ "$(GITHUB_ACTIONS)" == "true" ]; then FORMAT=github; fi
+	
+	./vendor/bin/phpmd ./src $${FORMAT} phpmd.xml.dist $(CLI_OPTIONS)
 
 .PHONY: tests
 tests: ## Run PHPUnit tests
