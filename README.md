@@ -11,7 +11,7 @@ This Template helps PHP developers with running most common PHP tools as simple 
 ```txt
 PHP Project Template v1.0.0
 
-Usage: make <target> [ENV_VAR=VALUE ...]
+Usage: make <target> [ENV_VAR=VALUE ...] [CLI_OPTIONS="--tool-cli-args"]
 
 Available targets:
 
@@ -37,8 +37,8 @@ Available targets:
 
 <!-- All external links should be here -->
 
-[actions badge]:    https://github.com/AlexNDRmac/makefile-php/workflows/Build/badge.svg
-[actions link]:     https://github.com/AlexNDRmac/makefile-php/actions
+[actions badge]:    https://github.com/AlexNDRmac/php-project-template/actions/workflows/main.yml/badge.svg
+[actions link]:     https://github.com/AlexNDRmac/php-project-template/actions/workflows/main.yml
 [phpcs link]:       https://github.com/squizlabs/PHP_CodeSniffer
 [phpmd link]:       https://github.com/phpmd/phpmd
 [phpunit link]:     https://github.com/sebastianbergmann/phpunit
