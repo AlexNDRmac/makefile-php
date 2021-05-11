@@ -40,7 +40,7 @@ phpmd: ## Run PHP Mess Detector inspection
 	./vendor/bin/phpmd --version
 	
 	FORMAT=text
-	if [[ "$(GITHUB_ACTIONS)" == "true" ]]; then FORMAT=github; fi
+	if test "$(GITHUB_ACTIONS)" = "true"; then FORMAT=github; fi
 	
 	./vendor/bin/phpmd ./src $${FORMAT} phpmd.xml.dist $(CLI_OPTIONS)
 
