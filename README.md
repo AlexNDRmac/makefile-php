@@ -11,7 +11,7 @@ This Template helps PHP developers with running most common PHP tools as simple 
 ```txt
 PHP Project Template v1.0.0
 
-Usage: make <target> [ENV_VAR=VALUE ...] [CLI_OPTIONS="--tool-cli-args"]
+Usage: make <target> [ENV_VAR=VALUE ...] [ARGS="--tool-cli-args"]
 
 Available targets:
 
@@ -32,7 +32,7 @@ Available targets:
 - Run [PHP Mess Detector][phpmd link] from your project `vendor/bin` directory using your `phpmd.xml` or `phpmd.xml.dist`
 - Execute [PHPUnit][phpunit link] tests and generates code coverage html report
 - Execute AST based [PHP Mutation Testing][infection link]
-- Generates HTML report with [Metrics][metrics link] about PHP project and classes
+- Generates HTML reports with [Metrics][metrics link] about PHP project and classes
 
 
 <!-- All external links should be here -->

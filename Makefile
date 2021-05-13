@@ -33,7 +33,7 @@ OUTPUT_DIR := storage/logs
 .PHONY: phpcs
 phpcs: ## Run PHP_CodeSniffer inspection
 	./vendor/bin/phpcs --version
-	./vendor/bin/phpcs $(CLI_OPTIONS)
+	./vendor/bin/phpcs $(ARGS)
 
 .PHONY: phpmd
 phpmd: ## Run PHP Mess Detector inspection
@@ -42,17 +42,17 @@ phpmd: ## Run PHP Mess Detector inspection
 	FORMAT=text
 	if test "$(GITHUB_ACTIONS)" = "true"; then FORMAT=github; fi
 	
-	./vendor/bin/phpmd ./src $${FORMAT} phpmd.xml.dist $(CLI_OPTIONS)
+	./vendor/bin/phpmd ./src $${FORMAT} phpmd.xml.dist $(ARGS)
 
 .PHONY: tests
 tests: ## Run PHPUnit tests
-	./vendor/bin/phpunit $(CLI_OPTIONS)
+	./vendor/bin/phpunit $(ARGS)
 	cat $(OUTPUT_DIR)/coverage-summary.txt
 
 .PHONY: infection
 infection: ## PHP Mutation Testing
 	./vendor/bin/infection --threads=$(PARALLELISM) \
-		--coverage=$(OUTPUT_DIR) $(CLI_OPTIONS)
+		--coverage=$(OUTPUT_DIR) $(ARGS)
 	echo "See detailed reports: ./$(OUTPUT_DIR)"
 	ls ./$(OUTPUT_DIR)/ | grep infection
 
@@ -69,7 +69,7 @@ metrics: ## Generate PHP Metrics HTML report
 .PHONY: help
 help: .title ## Show this help and exit
 	echo ''
-	echo 'Usage: make <target> [ENV_VAR=VALUE ...] [CLI_OPTIONS="--tool-cli-args"]'
+	echo 'Usage: make <target> [ENV_VAR=VALUE ...] [ARGS="--tool-cli-args"]'
 	echo ''
 	echo 'Available targets:'
 	echo ''
