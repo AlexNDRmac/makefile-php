@@ -11,8 +11,6 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-        with:
-          fetch-depth: 5
 
       - name: Parse CHANGELOG for Release Notes
         id: release
@@ -24,7 +22,7 @@ jobs:
         uses: ncipollo/release-action@v1
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          name: v${{ steps.get-version.outputs.VERSION }}
-          tag: ${{ steps.get-version.outputs.VERSION }}
-          body: ${{ steps.get-version.outputs.RELEASE_NOTES }}
+          name: v${{ steps.release.outputs.VERSION }}
+          tag: ${{ steps.release.outputs.VERSION }}
+          body: ${{ steps.release.outputs.RELEASE_NOTES }}
           allowUpdates: true
