@@ -65,7 +65,7 @@ jobs:
       - name: Run PHPUnit tests
         if: always()
         run: |
-          make tests | cs2pr
+          make tests
 
       - name: Run PHP Mutation Testing
         run: |
