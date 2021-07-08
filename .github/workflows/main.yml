@@ -84,3 +84,13 @@ jobs:
             ${{ github.workspace }}/storage/logs/
             !${{ github.workspace }}/storage/logs/.gitignore
           retention-days: 1
+
+      - name: Parse CHANGELOG for Release Notes
+        id: release-notes
+        run: |
+          echo ::set-output name=VERSION::${GITHUB_REF#refs/tags/}
+          echo ::set-output name=RELEASE_NOTES::"${.github/release-notes.sh CHANGELOG.md}"
+          .github/release-notes.sh CHANGELOG.md > release-notes.txt
+
+      - name: Dump release notes
+        run: echo ${{ steps.release-notes.outputs.RELEASE_NOTES }}
