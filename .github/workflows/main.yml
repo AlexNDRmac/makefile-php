@@ -69,7 +69,7 @@ jobs:
       - name: Run PHP Mutation Testing
         run: |
           make infection \
-            ARGS="--skip-initial-tests --git-diff-base=origin/$GITHUB_BASE_REF --git-diff-filter=AM --logger-github"
+            ARGS="--skip-initial-tests --git-diff-base=$GITHUB_BASE_REF --git-diff-filter=AM --logger-github"
 
       - name: Generate PHP Metrics HTML report for Project
         run: |
@@ -90,11 +90,8 @@ jobs:
         run: |
           echo ::set-output name=VERSION::${GITHUB_REF#refs/tags/}
           RELEASE_NOTES="${.github/release-notes.sh CHANGELOG.md}"
-          RELEASE_NOTES="${RELEASE_NOTES//'%'/'%25'}"
-          RELEASE_NOTES="${RELEASE_NOTES//$'\n'/'%0A'}"
-          RELEASE_NOTES="${RELEASE_NOTES//$'\r'/'%0D'}"
+          echo "$RELEASE_NOTES"
           echo "::set-output name=RELEASE_NOTES::$RELEASE_NOTES"
-          echo "$RELEASE_NOTES" > release-notes.txt
 
       - name: Dump release notes
         run: echo ${{ steps.release.outputs.RELEASE_NOTES }}
