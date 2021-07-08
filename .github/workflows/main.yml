@@ -89,7 +89,7 @@ jobs:
         id: release
         run: |
           echo ::set-output name=VERSION::${GITHUB_REF#refs/tags/}
-          RELEASE_NOTES="${.github/release-notes.sh CHANGELOG.md}"
+          RELEASE_NOTES="$(.github/release-notes.sh CHANGELOG.md)"
           echo "$RELEASE_NOTES"
           echo "::set-output name=RELEASE_NOTES::$RELEASE_NOTES"
 
