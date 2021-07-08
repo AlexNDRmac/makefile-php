@@ -6,6 +6,18 @@
 set -eu
 set -o pipefail
 
+# Each Releases into CHANGELOG should starts from H2 markdown tag: ## [version] - YYYY-MM-DD
+# Release notes topics (Added, Changed, etc..) should starts from H3 markdown tag: ### Added
+# Example:
+#     ## [1.0.0] - 2021-01-01
+#     ### Added
+#     - Feature description
+#     ### Changed
+#     - Changes description
+#
+#     ## [0.0.0] - 2020-01-01
+#     ### Added
+#     - First release description
 
 # Get Release notes for the latest release from CHANGELOG.md
 # How to use:
