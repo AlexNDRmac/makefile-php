@@ -53,14 +53,17 @@ jobs:
           composer install --no-progress --prefer-dist --no-interaction --no-ansi --no-suggest --no-scripts
 
       - name: Run PHPCS for the codestyle
+        if: always()
         run: |
           make phpcs
 
       - name: Run PHP Mess Detector for the code quality
+        if: always()
         run: |
-          make phpmd | cs2pr
+          make phpmd
 
       - name: Run PHPUnit tests
+        if: always()
         run: |
           make tests | cs2pr
 
