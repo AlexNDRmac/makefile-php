@@ -54,7 +54,7 @@ jobs:
 
       - name: Run PHPCS for the codestyle
         run: |
-          make phpcs | cs2pr
+          make phpcs
 
       - name: Run PHP Mess Detector for the code quality
         run: |
