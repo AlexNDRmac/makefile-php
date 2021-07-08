@@ -4,11 +4,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com)
 and this project adheres to [Semantic Versioning](http://semver.org).
 
-## [0.0.0] - 2021-07-08
+## [Unreleased]
 ### Added
-- Changelog parser
-### Changed
-- CI workflow
+- Changelog parser for release notes details publishing
+### Fixed
+- Infection testing run command syntax for CI
 
-## [0.0.0]
-- Initial PHP project Template configuation
+## [1.0.0] - 2021-05-10
+- Initial PHP project template for common PHP projects
+
+
+<!-- Aliases for URLs: please place here any long urls to keep clean markdown markup -->
+
+[Unreleased]:   https://github.com/AlexNDRmac/php-project-template/compare/1.0.0...HEAD
+[1.0.0]:        https://github.com/AlexNDRmac/php-project-template/compare/1.0.0...master
