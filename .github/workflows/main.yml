@@ -69,7 +69,7 @@ jobs:
       - name: Run PHP Mutation Testing
         run: |
           make infection \
-            ARGS="--skip-initial-tests --git-diff-base=$GITHUB_BASE_REF --git-diff-filter=AM --logger-github"
+            ARGS="--skip-initial-tests --git-diff-base=origin/${GITHUB_BASE_REF} --git-diff-filter=AM --logger-github"
 
       - name: Generate PHP Metrics HTML report for Project
         run: |
