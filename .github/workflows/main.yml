@@ -10,7 +10,6 @@ on:
 
 jobs:
   build:
-    name: Analysis and Tests
     runs-on: ubuntu-20.04
     env:
       COMPOSER_NO_INTERACTION: 1
