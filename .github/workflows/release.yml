@@ -1,0 +1,30 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - '*'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 5
+
+      - name: Parse CHANGELOG for Release Notes
+        id: release
+        run: |
+          echo ::set-output name=VERSION::${GITHUB_REF#refs/tags/}
+          echo ::set-output name=RELEASE_NOTES::$(.github/release-notes.sh CHANGELOG.md)
+
+      - name: Create Release
+        uses: ncipollo/release-action@v1
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          name: v${{ steps.get-version.outputs.VERSION }}
+          tag: ${{ steps.get-version.outputs.VERSION }}
+          body: ${{ steps.get-version.outputs.RELEASE_NOTES }}
+          allowUpdates: true
