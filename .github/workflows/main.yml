@@ -69,9 +69,9 @@ jobs:
 
       - name: Run PHP Mutation Testing
         run: |
-          git remote set-branches --add origin $GITHUB_BASE_REF && git fetch origin $GITHUB_BASE_REF
+          git fetch origin $GITHUB_BASE_REF
           make infection \
-            ARGS="--skip-initial-tests --git-diff-base=origin/$GITHUB_BASE_REF --git-diff-filter=AM --logger-github" | cs2pr
+            ARGS="--skip-initial-tests --git-diff-filter=AM --logger-github"
 
       - name: Generate PHP Metrics HTML report for Project
         run: |
